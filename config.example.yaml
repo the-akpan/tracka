@@ -1,0 +1,11 @@
+debug: true
+database:
+  uri: mongodb://admin:admin@localhost:27017
+  name: example
+middleware:
+  content_type:
+    - accepted/content
+    - more/content
+admin:
+  email: admin@localhost.com
+  password: admin

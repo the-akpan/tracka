@@ -25,10 +25,6 @@ func Init() {
 func setDefaults() {
 	viper.SetDefault("port", "8000")
 	viper.SetDefault("debug", true)
-	viper.SetDefault("database", map[string]string{
-		"uri":  "mongodb://admin:password@localhost:27017",
-		"name": "tracka",
-	})
 }
 
 func GetDebug() bool {
