@@ -6,7 +6,7 @@ import (
 	"github.com/spf13/viper"
 )
 
-func configMiddlewares() *schemas.Middleware {
+func Middlewares() *schemas.Middleware {
 	config := schemas.Middleware{}
 
 	config.ContentTypes = viper.GetStringSlice("middleware.content_type")

@@ -12,7 +12,7 @@ import (
 
 // connectDB extracts db credentials from config
 // and attempts to create a db connection
-func connectDB() *mongo.Database {
+func ConnectDB() *mongo.Database {
 	timeout := 5 * time.Second
 	ctx, cancel := context.WithTimeout(context.Background(), timeout)
 	defer cancel()

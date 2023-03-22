@@ -9,13 +9,7 @@ import (
 	"github.com/gorilla/mux"
 )
 
-var debug bool
-
-func SetDebug(value bool) {
-	debug = value
-}
-
-func Init() *mux.Router {
+func Init(debug bool) *mux.Router {
 	router := mux.NewRouter()
 
 	router.Use(middlewares.LoggingMiddleware)

@@ -10,7 +10,7 @@ import (
 
 // Extract app port from config file.
 // Returns port as string
-func getPort() string {
+func GetPort() string {
 	log.Println("Getting app port...")
 	port := viper.GetString("port")
 	if _, err := strconv.Atoi(port); err != nil {

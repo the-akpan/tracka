@@ -12,25 +12,22 @@ import (
 
 const userCollection = "users"
 
-func Init(db *mongo.Database) *UserCollection {
+func Init(db *mongo.Database, admin *schemas.User) *UserCollection {
 	collection := db.Collection(userCollection)
-	user := &UserCollection{collection}
-
-	var admin schemas.User
-	credentials := map[string]string{}
-	query := bson.D{{Key: "email", Value: credentials}}
+	userColl := &UserCollection{collection}
 
 	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Second)
 	defer cancel()
 
-	if err := user.FindOne(ctx, query).Decode(&admin); err != nil {
-		if err == mongo.ErrNoDocuments {
-			log.Println("Creating admin...")
-			user.Create("", "")
-		} else {
-			log.Fatal(err)
+	if num, err := userColl.CountDocuments(ctx, bson.D{}); num == 0 {
+		log.Println("Creating admin...")
+		_, err = userColl.Create(admin.Email, string(admin.Password))
+		if err != nil {
+			log.Fatalln(err)
 		}
+	} else if err != nil {
+		log.Fatalln(err)
 	}
 
-	return user
+	return userColl
 }

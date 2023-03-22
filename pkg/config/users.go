@@ -9,7 +9,7 @@ import (
 	"github.com/spf13/viper"
 )
 
-func getAdmin() *schemas.User {
+func GetAdmin() *schemas.User {
 	log.Println("Loading root account...")
 	getAdminDetails()
 
