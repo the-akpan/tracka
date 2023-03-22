@@ -1,7 +1,6 @@
 package config
 
 import (
-	"encoding/json"
 	"log"
 	"net/mail"
 	"strings"
@@ -15,10 +14,9 @@ func GetAdmin() *schemas.User {
 	log.Println("Loading root account...")
 	credentials := getAdminDetails()
 
-	user := &schemas.User{}
-	data, _ := json.Marshal(credentials)
-	if err := json.Unmarshal(data, user); err != nil {
-		log.Fatalln(err)
+	user := &schemas.User{
+		Email:    credentials["email"],
+		Password: credentials["password"],
 	}
 
 	return user
@@ -28,7 +26,7 @@ func getAdminDetails() map[string]string {
 	userMap := viper.GetStringMapString("admin")
 	errs := make([]string, 0)
 
-	keys := [2]string{"email", "password"}
+	keys := []string{"email", "password"}
 
 	for _, key := range keys {
 		if value, ok := userMap[key]; !ok {

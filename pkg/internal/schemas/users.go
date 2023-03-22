@@ -6,14 +6,14 @@ import (
 
 type User struct {
 	Email     string    `json:"email" bson:"email"`
-	Password  []byte    `json:"-" bson:"password"`
+	Password  string    `json:"-" bson:"password"`
 	CreatedAt time.Time `json:"-" bson:"createdAt"`
 }
 
 func (user *User) SetPassword(password string) error {
 	hash, err := hashValue([]byte(password))
 	if err == nil {
-		user.Password = hash
+		user.Password = string(hash)
 	}
 
 	return err

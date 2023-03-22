@@ -9,3 +9,7 @@ middleware:
 admin:
   email: admin@localhost.com
   password: admin
+controller:
+  cookie_name: example
+  secret_key: (32|64|128)bit_key
+  block_key: (32|64|128)bit_key

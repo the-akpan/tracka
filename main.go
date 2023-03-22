@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"time"
 
+	"internal/controllers"
 	"internal/database"
 	"internal/middlewares"
 	"internal/routes"
@@ -29,6 +30,9 @@ func main() {
 	// init middleware
 	middleware := config.Middlewares()
 	middlewares.Init(middleware)
+
+	controller := config.GetControllerConfig()
+	controllers.Init(controller)
 
 	// init routes
 	router := routes.Init(debug)

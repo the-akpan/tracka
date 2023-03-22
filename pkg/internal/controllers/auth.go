@@ -2,7 +2,9 @@ package controllers
 
 import (
 	"encoding/json"
+	"internal/logic"
 	"internal/schemas"
+	"log"
 	"net/http"
 )
 
@@ -26,7 +28,34 @@ func AuthLogin(res http.ResponseWriter, req *http.Request) {
 		return
 	}
 
+	user, err := logic.Login(&schema)
+	if err != nil {
+		// TODO: better error checking in case of db failure/internal error
+		responseStatus = http.StatusUnauthorized
+		response.Message = UNAUTHORIZED
+		return
+	}
+
+	var encoded string
+	if encoded, err = sc.Encode(cookieName, map[string]string{"email": user.Email}); err != nil {
+		log.Printf("Could not set cookie %+v\n", err)
+		responseStatus = http.StatusInternalServerError
+		response.Message = SERVER_ERROR
+		return
+	}
+
+	cookie := &http.Cookie{
+		Name:     cookieName,
+		Value:    encoded,
+		Path:     "/",
+		Secure:   false,
+		HttpOnly: true,
+	}
+
 	responseStatus = http.StatusOK
+	response.Message = "Logged in succesfully"
+
+	http.SetCookie(res, cookie)
 }
 
 func AuthLogout(res http.ResponseWriter, req *http.Request) {}

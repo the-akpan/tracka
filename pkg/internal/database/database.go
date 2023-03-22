@@ -14,14 +14,14 @@ type table struct {
 }
 
 var (
-	DB    *mongo.Database
-	Table *table
+	DB     *mongo.Database
+	Tables *table
 )
 
 func Init(db *mongo.Database, admin *schemas.User) {
 	DB = db
 
-	Table = &table{
+	Tables = &table{
 		Order: orders.Init(DB),
 		User:  user.Init(DB, admin),
 	}
